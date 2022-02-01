@@ -1,0 +1,17 @@
+.m-15 {
+  margin: 1.5%
+}
+
+
+::ng-deep .cdk-overlay-pane{
+  width: 60% !important
+}
+
+::ng-deep .white{
+  background-color: rgb(199, 194, 194);
+}
+
+.table-container {
+  max-width: 100%;
+  overflow: auto;
+}

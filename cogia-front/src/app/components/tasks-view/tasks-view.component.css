@@ -1,0 +1,26 @@
+.smoked{
+  background-color: rgb(199, 194, 194);
+}
+
+.white {
+  background-color: white;
+}
+.h25{
+  max-height: 400px;
+  display: block;
+}
+
+table {
+  width: 100%;
+}
+
+.table-container {
+  max-width: 100%;
+  overflow: auto;
+}
+
+::ng-deep.mat-header-row,.mat-header-cell{
+  background-color: whitesmoke;
+}
+
+
