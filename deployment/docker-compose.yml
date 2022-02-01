@@ -1,0 +1,66 @@
+version: '3'
+services:
+  api-tasks:
+    container_name: api-tasks
+    depends_on:
+      - mysqldb
+      - rabbitmq
+      - task-executor
+    build:
+      context: ./artifacts
+      dockerfile: ./backend_jar/Dockerfile
+    image: api-server:latest
+    ports:
+      - 8080:8080
+    stdin_open: true
+    tty: true
+    restart: always
+  task-executor:
+    container_name: task-executor
+    depends_on:
+     - rabbitmq
+    build:
+      context: ./artifacts
+      dockerfile: ./taskrunner_jar/Dockerfile
+    image: task-executor:latest
+    ports:
+      - 8081:8081
+    stdin_open: true
+    tty: true
+    restart: always
+  mysqldb:
+    container_name: 'database-container'
+    image: mysql:8.0.19
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=tD9nj65aWYcd7<9}H
+      - MYSQL_DATABASE=cogia
+      - MYSQL_PASSWORD=tD9nj65aWYcd7<9}H
+      - MYSQL_USER=cogia_prod
+    ports:
+      - 3306:3306
+    volumes: 
+      - db-configuration:/etc/mysql
+      - db-cogia:/var/lib/mysql
+  rabbitmq:
+    container_name: 'rabbitmq-container'
+    image: rabbitmq:3-management
+    ports:
+     - 5672:5672
+     - 15672:15672
+  front-container:
+    container_name: 'front-container'
+    image: front-container
+    depends_on:
+      - api-tasks
+    build:
+      context: ./front-server
+      dockerfile: ./Dockerfile
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    restart: always
+volumes:
+  db-configuration:
+  db-cogia:
